@@ -31,6 +31,11 @@
       "Type" : "String",
       "Default" : "10.0.200.0/24",
       "AllowedValues" : [ "10.0.200.0/24" ]
+    },
+    "06NatInstanceKeyPair" : {
+      "Description" : "Select KeyPair of NAT Instance",
+      "Type" : "AWS::EC2::KeyPair::KeyName",
+      "Default" : "ec2key1"
     }
   },
   "Resources" : {
@@ -264,6 +269,32 @@
         "Tags" : [ {
           "Key" : "Name",
           "Value" : "AllowNAT"
+        } ]
+      }
+    },
+    "NATInstance" : {
+      "Type" : "AWS::EC2::Instance",
+      "DependsOn" : [ "VPC", "AttachGateway", "PublicSubnet1", "NATSecurityGroup" ],
+      "Properties" : {
+        "ImageId" : "ami-03cf3903",
+        "InstanceType" : "t2.small",
+        "KeyName" : {
+          "Ref" : "06NatInstanceKeyPair"
+        },
+        "NetworkInterfaces" : [ {
+          "DeviceIndex" : "0",
+          "AssociatePublicIpAddress" : "true",
+          "SubnetId" : {
+            "Ref" : "PublicSubnet1"
+          },
+          "GroupSet" : [ {
+            "Ref" : "NATSecurityGroup"
+          } ]
+        } ],
+        "SourceDestCheck" : "false",
+        "Tags" : [ {
+          "Key" : "Name",
+          "Value" : "NAT"
         } ]
       }
     }
