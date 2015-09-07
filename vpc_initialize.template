@@ -48,7 +48,7 @@
     },
     "PublicSubnet1" : {
       "Type" : "AWS::EC2::Subnet",
-      "DependsOn" : [ "VPC", "AttachGateway" ],
+      "DependsOn" : "VPC",
       "Properties" : {
         "VpcId" : {
           "Ref" : "VPC"
@@ -69,7 +69,7 @@
     },
     "PublicSubnet2" : {
       "Type" : "AWS::EC2::Subnet",
-      "DependsOn" : [ "VPC", "AttachGateway" ],
+      "DependsOn" : "VPC",
       "Properties" : {
         "VpcId" : {
           "Ref" : "VPC"
@@ -90,7 +90,7 @@
     },
     "PrivateSubnet1" : {
       "Type" : "AWS::EC2::Subnet",
-      "DependsOn" : [ "VPC", "AttachGateway" ],
+      "DependsOn" : "VPC",
       "Properties" : {
         "VpcId" : {
           "Ref" : "VPC"
@@ -111,7 +111,7 @@
     },
     "PrivateSubnet2" : {
       "Type" : "AWS::EC2::Subnet",
-      "DependsOn" : [ "VPC", "AttachGateway" ],
+      "DependsOn" : "VPC",
       "Properties" : {
         "VpcId" : {
           "Ref" : "VPC"
@@ -167,7 +167,7 @@
     },
     "PublicRoute" : {
       "Type" : "AWS::EC2::Route",
-      "DependsOn" : "PublicRouteTable",
+      "DependsOn" : [ "PublicRouteTable", "AttachGateway" ],
       "Properties" : {
         "RouteTableId" : {
           "Ref" : "PublicRouteTable"
