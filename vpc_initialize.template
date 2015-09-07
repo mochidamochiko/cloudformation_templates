@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion" : "2010-09-09",
-  "Description" : "AWS CloudFormation Template: Create vpc with 4 subnet (Multi-AZ), Public/Private subnet, routing table, IGW, NAT instance.",
+  "Description" : "AWS CloudFormation Template: Create VPC with 4 subnet (Multi-AZ, Public/Private subnet), routing table, IGW, and NAT instance with Security Group.",
   "Parameters" : {
     "01VPCCIDR" : {
       "Description" : "CIDR Block for VPC",
@@ -209,7 +209,7 @@
     },
     "PrivateRouteTable" : {
       "Type" : "AWS::EC2::RouteTable",
-      "DependsOn" : "VPC",
+      "DependsOn" : [ "VPC", "NATInstance" ],
       "Properties" : {
         "VpcId" : {
           "Ref" : "VPC"
@@ -218,6 +218,19 @@
           "Key" : "Name",
           "Value" : "Private RouteTable"
         } ]
+      }
+    },
+    "PrivateRoute" : {
+      "Type" : "AWS::EC2::Route",
+      "DependsOn" : [ "PrivateRouteTable", "NATInstance" ],
+      "Properties" : {
+        "RouteTableId" : {
+          "Ref" : "PrivateRouteTable"
+        },
+        "DestinationCidrBlock" : "0.0.0.0/0",
+        "InstanceId" : {
+          "Ref" : "NATInstance"
+        }
       }
     },
     "PrivateSubnet1RouteTableAssociation" : {
