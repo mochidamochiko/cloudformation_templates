@@ -241,7 +241,7 @@
     },
     "NATSecurityGroup" : {
       "Type" : "AWS::EC2::SecurityGroup",
-      "DependsOn" : [ "VPC", "AttachGateway" ],
+      "DependsOn" : "VPC",
       "Properties" : {
         "GroupDescription" : "Enable internal access to the NAT device",
         "VpcId" : {
