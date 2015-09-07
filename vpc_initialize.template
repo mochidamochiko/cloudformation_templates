@@ -298,5 +298,13 @@
         } ]
       }
     }
+  },
+  "Outputs" : {
+    "NATPublicIP" : {
+      "Value" : {
+        "Fn::GetAtt" : [ "NATInstance", "PublicIp" ]
+      },
+      "Description" : "NAT Instance Public IP Address"
+    }
   }
 }
