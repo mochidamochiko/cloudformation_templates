@@ -290,7 +290,7 @@
       "DependsOn" : [ "VPC", "AttachGateway", "PublicSubnet1", "NATSecurityGroup" ],
       "Properties" : {
         "ImageId" : "ami-03cf3903",
-        "InstanceType" : "t2.small",
+        "InstanceType" : "t2.micro",
         "KeyName" : {
           "Ref" : "06NatInstanceKeyPair"
         },
